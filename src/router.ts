@@ -1,4 +1,4 @@
-import { HttpServerRequestListener } from '@src/http.service/HttpServer.types';
+import { HttpServerRequestListener } from '@services/http.service/HttpServer.types';
 
 interface Routes {
   [key: string]: () => string;
