@@ -1,4 +1,4 @@
-import { httpService } from '@src/http.service';
+import { httpService } from '@services/http.service';
 
 describe('http.service', () => {
   it('Should start', async () => {

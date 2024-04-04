@@ -1,9 +1,9 @@
 import { AddressInfo } from 'node:net';
-import { HttpServer } from '@src/http.service/HttpServer';
+import { HttpServer } from '@services/http.service/HttpServer';
 import {
   HttpServerRequest,
   HttpServerResponse,
-} from '@src/http.service/HttpServer.types';
+} from '@services/http.service/HttpServer.types';
 import { STATUS_CODES } from 'node:http';
 
 const mockRouter = {
@@ -16,8 +16,7 @@ const mockRouter = {
     text: STATUS_CODES[200],
   },
   _listener(req: HttpServerRequest, res: HttpServerResponse) {
-    const { code, text } =
-			req.url === '/' ? this.successResp : this.errResp;
+    const { code, text } = req.url === '/' ? this.successResp : this.errResp;
     res.statusCode = code;
     res.end(text);
   },
@@ -39,8 +38,7 @@ afterAll(async () => server.stop());
 
 describe('Http server', () => {
   it('Should use correct params', async () => {
-    const { port: srvPort, address } =
-			server.instance.address() as AddressInfo;
+    const { port: srvPort, address } = server.instance.address() as AddressInfo;
     expect(address).toBe(host);
     expect(srvPort).toBe(port);
   });
