@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {       
+    "baseUrl": "./",
+    "paths": {
+       "@src/*": ["src/*"],
+       "@config": ["src/config/index.ts"],
+       "@mock/*": ["tests/mock/*"],
+    },    
+    "declaration": false,
+    "outDir": "./build",    
+  },
+  "include": ["src/**/*"]
+}
