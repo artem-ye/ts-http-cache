@@ -10,13 +10,17 @@ type Storage = {
   [k: StorageKey]: StorageItem;
 };
 
+export type CacheStorageProps = {
+  ttl?: number;
+};
+
 const DEF_TTL: number = 10000;
 
 export class CacheStorage {
   private storage: Storage;
   private ttl: number;
 
-  constructor({ ttl = DEF_TTL }: { ttl?: number } = {}) {
+  constructor({ ttl = DEF_TTL }: CacheStorageProps = {}) {
     this.storage = {};
     this.ttl = ttl;
   }
@@ -39,7 +43,11 @@ export class CacheStorage {
     delete this.storage[key];
   }
 
-  shrink() {
+  size(): number {
+    return Object.keys(this.storage).length;
+  }
+
+  shrink(): void {
     const now: number = Date.now();
 
     for (const [key, val] of Object.entries(this.storage)) {
