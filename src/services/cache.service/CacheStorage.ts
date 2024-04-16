@@ -1,7 +1,7 @@
-type StorageKey = string;
+export type StorageKey = string;
 type StorageValue = unknown;
 
-type StorageItem = {
+export type StorageItem = {
   val: StorageValue;
   expires_at: number;
 };

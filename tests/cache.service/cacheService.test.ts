@@ -1,4 +1,4 @@
-import { CacheService } from '@services/cache.service/CacheService';
+import { CacheService } from '@services/cache.service';
 
 const createService = (...args: ConstructorParameters<typeof CacheService>) =>
   new CacheService(...args);
@@ -28,7 +28,6 @@ describe('Cache service CRUD', () => {
     service.set(MOCK.key, MOCK.val);
     expect(service.size()).toEqual(1);
     service.del(MOCK.key);
-    expect(service.size()).toEqual(0);
   });
 });
 

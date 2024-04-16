@@ -1,6 +1,6 @@
 import { CacheStorage, CacheStorageProps } from './CacheStorage';
 
-interface CacheServiceProps extends CacheStorageProps {
+export interface CacheServiceProps extends CacheStorageProps {
   shrinkInterval?: number;
 }
 
