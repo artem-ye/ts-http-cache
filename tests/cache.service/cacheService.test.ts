@@ -1,4 +1,4 @@
-import { CacheService } from '@services/cache.service';
+import { CacheService } from '@services/cache.service/CacheService';
 
 const createService = (...args: ConstructorParameters<typeof CacheService>) =>
   new CacheService(...args);
