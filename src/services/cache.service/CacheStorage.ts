@@ -25,7 +25,7 @@ export class CacheStorage {
 
   get(key: StorageKey): StorageValue {
     const item = this.storage.get(key);
-    if (!item || Date.now() > item.expires_at) {
+    if (!item || this._hasExpired(item)) {
       return null;
     }
 
@@ -49,9 +49,13 @@ export class CacheStorage {
     const now: number = Date.now();
 
     for (const [key, val] of this.storage.entries()) {
-      if (now > val.expires_at) {
+      if (this._hasExpired(val, now)) {
         this.del(key);
       }
     }
+  }
+
+  private _hasExpired(item: StorageItem, now?: number): boolean {
+    return (now || Date.now()) > item.expires_at;
   }
 }
