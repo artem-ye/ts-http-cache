@@ -29,6 +29,8 @@ describe('Cache storage', () => {
   });
 
   it('get expired data should return null', () => {
+    jest.useFakeTimers();
+
     const cache = createCache();
     const DATA = { a: 12 };
     const KEY = 'foo';
@@ -36,12 +38,14 @@ describe('Cache storage', () => {
 
     expect(cache.get(KEY)).toBe(DATA);
 
-    setTimeout(() => {
-      expect(cache.get(KEY)).toBeNull();
-    }, 5);
+    jest.advanceTimersByTime(5);
+    expect(cache.get(KEY)).toBeNull();
+    jest.useRealTimers();
   });
 
   it('shrink expired data should clear cache', () => {
+    jest.useFakeTimers();
+
     const cache = createCache();
     const DATA = { a: 12 };
     const KEY = 'foo';
@@ -49,9 +53,9 @@ describe('Cache storage', () => {
 
     expect(cache.get(KEY)).toBe(DATA);
 
-    setTimeout(() => {
-      cache.shrink();
-      expect(cache.size()).toEqual(0);
-    }, 5);
+    jest.advanceTimersByTime(5);
+    cache.shrink();
+    expect(cache.size()).toEqual(0);
+    jest.useRealTimers();
   });
 });

@@ -6,9 +6,7 @@ export type StorageItem = {
   expires_at: number;
 };
 
-type Storage = {
-  [k: StorageKey]: StorageItem;
-};
+type Storage = Map<StorageKey, StorageItem>;
 
 export type CacheStorageProps = {
   ttl?: number;
@@ -21,12 +19,12 @@ export class CacheStorage {
   private ttl: number;
 
   constructor({ ttl = DEF_TTL }: CacheStorageProps = {}) {
-    this.storage = {};
+    this.storage = new Map();
     this.ttl = ttl;
   }
 
   get(key: StorageKey): StorageValue {
-    const item = this.storage[key];
+    const item = this.storage.get(key);
     if (!item || Date.now() > item.expires_at) {
       return null;
     }
@@ -36,21 +34,21 @@ export class CacheStorage {
 
   set(key: StorageKey, val: StorageValue, ttl: number = this.ttl) {
     const expires_at: number = Date.now() + ttl;
-    this.storage[key] = { val, expires_at };
+    this.storage.set(key, { val, expires_at });
   }
 
   del(key: StorageKey) {
-    delete this.storage[key];
+    this.storage.delete(key);
   }
 
   size(): number {
-    return Object.keys(this.storage).length;
+    return this.storage.size;
   }
 
   shrink(): void {
     const now: number = Date.now();
 
-    for (const [key, val] of Object.entries(this.storage)) {
+    for (const [key, val] of this.storage.entries()) {
       if (now > val.expires_at) {
         this.del(key);
       }
