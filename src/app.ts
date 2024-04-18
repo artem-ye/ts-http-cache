@@ -5,5 +5,6 @@ import { cacheService } from './services/cache.service';
 
 export const app = async (): Promise<void> => {
   const listener = createRouter(cacheService);
+  cacheService.start();
   await httpService.start({ ...config, listener });
 };

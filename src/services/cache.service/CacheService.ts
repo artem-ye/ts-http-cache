@@ -33,6 +33,8 @@ export class CacheService {
   }
 
   start() {
+    // initialize empty timer
+    this.shrinkTimerID = setTimeout(() => {}, 0);
     this.scheduleShrink();
   }
 
@@ -42,7 +44,9 @@ export class CacheService {
   }
 
   private scheduleShrink() {
-    if (!this.shrinkTimerID) return;
+    if (!this.shrinkTimerID) {
+      return;
+    }
 
     this.shrinkTimerID = setTimeout(
       this._setTimeoutHandler.bind(this),
@@ -52,7 +56,6 @@ export class CacheService {
 
   private _setTimeoutHandler() {
     this.shrink();
-    this.shrinkTimerID = null;
     this.scheduleShrink();
   }
 }
